@@ -1,0 +1,18 @@
+scalar Long
+
+type Street{
+    id: Long
+    name: String
+    area: String
+}
+
+type City{
+    id:Long
+    name:String
+    country:String
+    streets: [Street]
+}
+
+type Query{
+    getAllCities: [City]
+}
