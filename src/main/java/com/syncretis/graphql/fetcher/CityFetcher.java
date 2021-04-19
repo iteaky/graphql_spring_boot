@@ -18,8 +18,6 @@ public class CityFetcher implements DataFetcher<List<CityDTO>> {
 
     @Override
     public List<CityDTO> get(DataFetchingEnvironment dataFetchingEnvironment) {
-        return cityService.getAllCities().stream()
-                .map(CityDTO::fromEntity)
-                .collect(Collectors.toList());
+        return cityService.getAllCities();
     }
 }
