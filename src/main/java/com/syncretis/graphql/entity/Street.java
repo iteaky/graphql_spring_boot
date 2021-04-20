@@ -19,4 +19,7 @@ public class Street {
 
     private String area;
 
+    @Column(name = "created_by")
+    private String createdBy;
+
 }

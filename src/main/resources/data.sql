@@ -14,21 +14,25 @@ CREATE TABLE street
     name   VARCHAR(250) NOT NULL,
     area   VARCHAR(250) NOT NULL,
     city_id INT          NOT NULL,
+    created_by   VARCHAR(250) NOT NULL,
     FOREIGN KEY (city_id) REFERENCES city (city_id)
 );
 
 INSERT INTO city (city_id, name, country)
-VALUES (1, 'Санкт-Петербург', 'Россия'),
-       (2, 'Томск', 'Россия'),
-       (3, 'Калининград ', 'Россия');
+VALUES (1, 'Saint-Petersburg', 'Russia'),
+       (2, 'Tomsk', 'Russia'),
+       (3, 'Kalliningrad ', 'Russia');
 
-INSERT INTO street (street_id, name, area, city_id)
-VALUES (1, 'Шереметьевская', 'Московский', 1),
-       (2, 'Пулковское', 'Московский', 1),
-       (3, 'Толмачевская', 'Московский', 1),
-       (4, 'Алтайская', 'Советский', 2),
-       (5, 'Сибирская', 'Советский', 2),
-       (6, 'Фрунзе', 'Советский', 2),
-       (7, 'Виктора Гюго', 'Ленинградский', 3),
-       (8, 'А.Ахматовой', 'Ленинградский', 3),
-       (9, 'Адмирала Макарова', 'Ленинградский', 3);
+INSERT INTO street (street_id, name, area, city_id, created_by)
+VALUES (1, 'Sheremetevskaya', 'Moskovsky', 1, 's5yx73'),
+       (2, 'Viktora Gugo', 'Leningradsky', 3,  's5yx73'),
+       (3, 'Frunze', 'Sovetsky', 2,  's5yx73'),
+       (4, 'Nevsky', 'Centr', 1, 's5yx73'),
+       (5, 'A. Ahmatovoy', 'Leningradsky', 3, 's5yx73'),
+       (6, 'Tolmachevskaya', 'Moskovsky', 1,  's5yx73'),
+       (7, 'Pulkovskoe', 'Moskovsky', 1, 's5yx73'),
+       (8, 'Altayskaya', 'Sovetsky', 2, 's5yx73'),
+       (9, 'Admirala Makarova', 'Leningradsky', 3, 's5yx73'),
+       (10, 'Vosstaniya', 'Centr', 1, 's5yx73'),
+       (11, 'Mayakovskaya', 'Centr', 1, 's5yx73'),
+       (12, 'Sibirskaya', 'Sovetsky', 2, 's5yx73');

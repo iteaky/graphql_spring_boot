@@ -4,6 +4,7 @@ type Street{
     id: Long
     name: String
     area: String
+    owner: Street
 }
 
 type City{

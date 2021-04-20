@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class StreetService {
-    private StreetRepository streetRepository;
+    private final StreetRepository streetRepository;
 
     @SneakyThrows
     public List<StreetDTO> findByIds(List<Long> ids) {
