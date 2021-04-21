@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CityFetcher implements DataFetcher<List<CityDTO>> {
+public class GetAllCityFetcher implements DataFetcher<List<CityDTO>> {
 
     private final CityService cityService;
 

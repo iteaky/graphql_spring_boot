@@ -1,0 +1,18 @@
+query GET_ALL_CITIES {
+    getAllCities{
+        id,
+        name,
+        country,
+        streets {
+            id,
+            name,
+            area,
+            owner,
+            malls {
+                id,
+                name,
+                building
+            }
+        }
+    }
+}

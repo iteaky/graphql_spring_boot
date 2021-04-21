@@ -1,6 +1,7 @@
 package com.syncretis.graphql.graph;
 
 import com.syncretis.graphql.dataloader.CityDataLoader;
+import com.syncretis.graphql.dataloader.MallDataLoader;
 import com.syncretis.graphql.dataloader.StreetDataLoader;
 import com.syncretis.graphql.service.StreetService;
 import graphql.kickstart.execution.context.DefaultGraphQLContext;
@@ -42,6 +43,7 @@ public class CustomGraphQLContextBuilder implements GraphQLServletContextBuilder
         DataLoaderRegistry registry = new DataLoaderRegistry();
         registry.register("streetDataLoader", StreetDataLoader.streetDTODataLoader);
         registry.register("cityDataLoader", CityDataLoader.cityDTODataLoader);
+        registry.register("mallDataLoader", MallDataLoader.mallDTODataLoader);
         return registry;
     }
 }

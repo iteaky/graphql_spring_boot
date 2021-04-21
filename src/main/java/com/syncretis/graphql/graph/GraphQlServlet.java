@@ -1,7 +1,9 @@
 package com.syncretis.graphql.graph;
 
-import com.syncretis.graphql.fetcher.CityFetcher;
-import com.syncretis.graphql.fetcher.StreetsFetcher;
+import com.syncretis.graphql.fetcher.GetAllCityFetcher;
+import com.syncretis.graphql.fetcher.GetCityFetcher;
+import com.syncretis.graphql.fetcher.GetMallFetcher;
+import com.syncretis.graphql.fetcher.GetStreetFetcher;
 import com.syncretis.graphql.service.ServiceLocator;
 import graphql.Scalars;
 import graphql.kickstart.servlet.GraphQLConfiguration;
@@ -21,13 +23,17 @@ import java.io.FileNotFoundException;
 
 @WebServlet(name = "HelloServlet", urlPatterns = {"/graphql"}, loadOnStartup = 1)
 public class GraphQlServlet extends GraphQLHttpServlet {
-    private CityFetcher cityFetcher;
-    private StreetsFetcher streetsFetcher;
+    private GetAllCityFetcher getAllCityFetcher;
+    private GetStreetFetcher getStreetFetcher;
+    private GetCityFetcher cityFetcher;
+    private GetMallFetcher mallFetcher;
 
     @Override
     public void init() throws ServletException {
-        cityFetcher = ServiceLocator.getFetcher(CityFetcher.class);
-        streetsFetcher = ServiceLocator.getFetcher(StreetsFetcher.class);
+        getAllCityFetcher = ServiceLocator.getFetcher(GetAllCityFetcher.class);
+        cityFetcher = ServiceLocator.getFetcher(GetCityFetcher.class);
+        getStreetFetcher = ServiceLocator.getFetcher(GetStreetFetcher.class);
+        mallFetcher = ServiceLocator.getFetcher(GetMallFetcher.class);
         super.init();
     }
 
@@ -49,8 +55,11 @@ public class GraphQlServlet extends GraphQLHttpServlet {
 
         RuntimeWiring runtimeWiring = RuntimeWiring.newRuntimeWiring()
                 .scalar(Scalars.GraphQLLong)
-                .type("Query", builder -> builder.dataFetcher("getAllCities", cityFetcher))
-                .type("City", builder -> builder.dataFetcher("streets", streetsFetcher))
+                .type("Query", builder -> builder
+                        .dataFetcher("getAllCities", getAllCityFetcher)
+                        .dataFetcher("getCity", cityFetcher))
+                .type("City", builder -> builder.dataFetcher("streets", getStreetFetcher))
+                .type("Street", builder -> builder.dataFetcher("malls", mallFetcher))
                 .build();
 
         SchemaGenerator schemaGenerator = new SchemaGenerator();

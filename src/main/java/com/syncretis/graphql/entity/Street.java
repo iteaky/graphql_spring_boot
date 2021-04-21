@@ -1,8 +1,11 @@
 package com.syncretis.graphql.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,5 +24,11 @@ public class Street {
 
     @Column(name = "created_by")
     private String createdBy;
+
+    @ElementCollection
+    @CollectionTable(name="mall", joinColumns=@JoinColumn(name="street_id", referencedColumnName = "street_id"))
+    @Column(name = "mall_id")
+    @Fetch(FetchMode.JOIN)
+    private List<Long> malls;
 
 }

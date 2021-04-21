@@ -1,10 +1,16 @@
 scalar Long
 
+type Mall{
+    id: Long
+    name: String
+    building: Long
+}
 type Street{
     id: Long
     name: String
     area: String
-    owner: Street
+    owner: String
+    malls:[Mall]
 }
 
 type City{
@@ -16,4 +22,5 @@ type City{
 
 type Query{
     getAllCities: [City]
+    getCity(cityId: Long): City
 }
