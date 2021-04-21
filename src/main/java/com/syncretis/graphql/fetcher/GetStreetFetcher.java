@@ -1,5 +1,8 @@
 package com.syncretis.graphql.fetcher;
 
+import com.syncretis.graphql.config.graph.GraphQLFetcher;
+import com.syncretis.graphql.config.graph.GraphQLType;
+import com.syncretis.graphql.dataloader.StreetDataLoader;
 import com.syncretis.graphql.dto.CityDTO;
 import com.syncretis.graphql.dto.StreetDTO;
 import com.syncretis.graphql.service.StreetService;
@@ -14,14 +17,14 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 @AllArgsConstructor
+@GraphQLFetcher(type = GraphQLType.City, name = "streets")
 public class GetStreetFetcher implements DataFetcher<CompletableFuture<List<StreetDTO>>> {
-//    private StreetService streetService;
+
+    private final StreetDataLoader streetDataLoader;
 
     @Override
     public CompletableFuture<List<StreetDTO>> get(DataFetchingEnvironment environment) {
         CityDTO source = environment.getSource();
-        DataLoader<Long, StreetDTO> streetDataLoader = environment.getDataLoader("streetDataLoader");
         return streetDataLoader.loadMany(source.getStreetsIds());
-//        return CompletableFuture.completedFuture(streetService.findByIds(source.getStreetsIds()));
     }
 }

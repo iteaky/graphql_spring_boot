@@ -15,7 +15,7 @@ public class StreetService {
     private final StreetRepository streetRepository;
 
     @SneakyThrows
-    public List<StreetDTO> findByIds(List<Long> ids) {
+    public List<StreetDTO> getAllByIds(List<Long> ids) {
         Thread.sleep(10000);
         return streetRepository.findAllById(ids).stream()
                 .map(StreetDTO::fromEntity)
