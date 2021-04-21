@@ -1,6 +1,8 @@
 package com.syncretis.graphql.config.graph;
 
+import com.syncretis.graphql.config.graph.exceptions.CustomExecutionStrategyProvider;
 import graphql.Scalars;
+import graphql.kickstart.execution.GraphQLQueryInvoker;
 import graphql.kickstart.servlet.GraphQLConfiguration;
 import graphql.kickstart.servlet.GraphQLHttpServlet;
 import graphql.schema.GraphQLSchema;
@@ -25,8 +27,8 @@ public class GraphQLServlet extends GraphQLHttpServlet {
     @Autowired
     private CustomGraphQLContextBuilder contextBuilder;
 
-//    @Autowired
-//    private  CustomExecutionStrategyProvider provider;
+    @Autowired
+    private CustomExecutionStrategyProvider provider;
 
 
     @Override
@@ -39,13 +41,13 @@ public class GraphQLServlet extends GraphQLHttpServlet {
     @Override
     protected GraphQLConfiguration getConfiguration() {
 
-//        GraphQLQueryInvoker queryInvoker = GraphQLQueryInvoker.newBuilder()
-//                .withExecutionStrategyProvider(provider)
-//                .build();
+        GraphQLQueryInvoker queryInvoker = GraphQLQueryInvoker.newBuilder()
+                .withExecutionStrategyProvider(provider)
+                .build();
 
         return GraphQLConfiguration
                 .with(createSchema())
-//                .with(queryInvoker)
+                .with(queryInvoker)
                 .with(contextBuilder)
                 .build();
     }
