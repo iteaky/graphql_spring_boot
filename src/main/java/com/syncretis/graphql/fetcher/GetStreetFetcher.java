@@ -5,11 +5,9 @@ import com.syncretis.graphql.config.graph.GraphQLType;
 import com.syncretis.graphql.dataloader.StreetDataLoader;
 import com.syncretis.graphql.dto.CityDTO;
 import com.syncretis.graphql.dto.StreetDTO;
-import com.syncretis.graphql.service.StreetService;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.AllArgsConstructor;
-import org.dataloader.DataLoader;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

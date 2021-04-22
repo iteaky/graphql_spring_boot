@@ -1,10 +1,7 @@
 package com.syncretis.graphql.service;
 
 import com.syncretis.graphql.dto.CityDTO;
-import com.syncretis.graphql.entity.City;
-import com.syncretis.graphql.entity.Street;
 import com.syncretis.graphql.repository.CityRepository;
-import com.syncretis.graphql.repository.StreetRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

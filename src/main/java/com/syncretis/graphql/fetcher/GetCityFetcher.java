@@ -7,6 +7,9 @@ import com.syncretis.graphql.dto.CityDTO;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.AllArgsConstructor;
+import org.dataloader.BatchLoaderEnvironment;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;

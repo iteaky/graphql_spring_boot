@@ -10,12 +10,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class StreetBatchLoader implements BatchLoader<Long, StreetDTO> {
 
+    public final Executor taskExecutor;
     private final StreetService streetService;
 
     @Override
@@ -25,6 +27,6 @@ public class StreetBatchLoader implements BatchLoader<Long, StreetDTO> {
                         list.indexOf(entity.getId())))
                 .collect(Collectors.toList());
 
-        return CompletableFuture.supplyAsync(() -> byIds);
+        return CompletableFuture.supplyAsync(() -> byIds, taskExecutor);
     }
 }

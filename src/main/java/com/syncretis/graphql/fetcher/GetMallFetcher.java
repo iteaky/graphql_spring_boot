@@ -8,7 +8,6 @@ import com.syncretis.graphql.dto.StreetDTO;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.AllArgsConstructor;
-import org.dataloader.DataLoader;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
