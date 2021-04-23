@@ -1,8 +1,11 @@
 
+            __________________________________________________________________________
+           |                                                                          |
+           |                                    old style                             |
+           |__________________________________________________________________________|
 
 
-
-{"query":"mutation($file: Upload!){uploadFile(file: $file)"}
+operations -> {"query":"mutation($file: Upload!){uploadFile(file: $file)"}
 
 FORM-DATA
 
@@ -19,3 +22,20 @@ file: $file
 map -> {"0": ["variables.file"] }
 
 0 -> 'upload file'
+
+            __________________________________________________________________________
+           |                                                                          |
+           |                                    new style                             |
+           |__________________________________________________________________________|
+
+operation -> {"query":"mutation{ fileSize }"}
+file -> 'upload file'
+
+operation -> {"query":"mutation($mall: String){
+  file(input: {
+mallId: 1,
+mall:$mall,
+})
+}",
+  "variables": {"mall":"1"}
+}

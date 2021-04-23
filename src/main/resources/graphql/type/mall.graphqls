@@ -1,0 +1,5 @@
+type Mall{
+    id: ID
+    name: String
+    building: PositiveInt
+}

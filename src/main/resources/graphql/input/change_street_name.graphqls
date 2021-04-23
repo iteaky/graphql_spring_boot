@@ -1,0 +1,4 @@
+input ChangeStreetNameInput {
+    id: ID
+    name: String
+}

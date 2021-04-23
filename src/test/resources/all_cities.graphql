@@ -1,5 +1,5 @@
 query GET_ALL_CITIES {
-    getAllCities{
+    cities{
         id,
         name,
         country,

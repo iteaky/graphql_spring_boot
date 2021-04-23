@@ -1,5 +1,8 @@
 package com.syncretis.graphql.config;
 
+import graphql.scalars.ExtendedScalars;
+import graphql.schema.GraphQLScalarType;
+import org.dataloader.DataLoader;
 import org.dataloader.DataLoaderRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +14,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import java.util.Map;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Configuration
 public class AppConfig {
+
+    @Bean
+    public GraphQLScalarType positiveInt() {
+        return ExtendedScalars.PositiveInt;
+    }
 
     @Bean
     public WebSecurityConfigurerAdapter webSecurityConfigurerAdapter() {
@@ -24,8 +31,11 @@ public class AppConfig {
     }
 
     @Bean
-    public DataLoaderRegistry dataLoaderRegistry() {
-        return new DataLoaderRegistry();
+    public DataLoaderRegistry dataLoaderRegistry(Map<String, DataLoader> dataLoaders) {
+        DataLoaderRegistry dataLoaderRegistry = new DataLoaderRegistry();
+        dataLoaders.keySet()
+                .forEach(it -> dataLoaderRegistry.register(it, dataLoaders.get(it)));
+        return dataLoaderRegistry;
     }
 
     @Bean
@@ -39,10 +49,16 @@ public class AppConfig {
     @Bean
     public TaskDecorator taskDecorator() {
         return runnable -> {
+            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
             final SecurityContext securityContext = SecurityContextHolder.getContext();
             return () -> {
+                try {
+                    RequestContextHolder.setRequestAttributes(requestAttributes);
                     SecurityContextHolder.setContext(securityContext);
                     runnable.run();
+                } finally {
+                    RequestContextHolder.resetRequestAttributes();
+                }
             };
         };
     }

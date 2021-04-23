@@ -1,0 +1,5 @@
+type Mutation{
+    changeStreetName(input: ChangeStreetNameInput):Street
+    fileSize: String
+    file(input: FileWithMall): String
+}

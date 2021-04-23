@@ -1,8 +1,8 @@
 package com.syncretis.graphql;
 
-import com.syncretis.graphql.dto.CityTestDTO;
-import com.syncretis.graphql.dto.MallTestDTO;
-import com.syncretis.graphql.dto.StreetTestDTO;
+import com.syncretis.graphql.model.dto.CityTestDTO;
+import com.syncretis.graphql.model.dto.MallTestDTO;
+import com.syncretis.graphql.model.dto.StreetTestDTO;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,7 +16,7 @@ public abstract class TestModule {
         actual.sort(Comparator.comparingLong(CityTestDTO::getId));
         expected.sort(Comparator.comparingLong(CityTestDTO::getId));
 
-        Map<Long, List<CityTestDTO>> cityIdto2CitiesMap = Stream.of(actual, expected)
+        Map<Long, List<CityTestDTO>> cityIdTo2CitiesMap = Stream.of(actual, expected)
                 .flatMap(Collection::stream)
                 .collect(Collectors.groupingBy(CityTestDTO::getId));
 
@@ -25,9 +25,9 @@ public abstract class TestModule {
                 .usingElementComparatorIgnoringFields("streets")
                 .isEqualTo(actual);
 
-        cityIdto2CitiesMap.keySet().
+        cityIdTo2CitiesMap.keySet().
                 forEach(cityId -> {
-                    List<CityTestDTO> actualToExpected = cityIdto2CitiesMap.get(cityId);
+                    List<CityTestDTO> actualToExpected = cityIdTo2CitiesMap.get(cityId);
                     List<StreetTestDTO> streets0 = actualToExpected.get(0).getStreets();
                     List<StreetTestDTO> streets1 = actualToExpected.get(1).getStreets();
                     compareStreetsLists(streets0, streets1);

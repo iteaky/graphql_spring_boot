@@ -1,0 +1,4 @@
+input FileWithMall{
+    mall: String
+    mallId: ID
+}
