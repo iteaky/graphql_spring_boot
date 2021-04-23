@@ -1,4 +1,4 @@
-package com.syncretis.graphql.fetcher;
+package com.syncretis.graphql.fetcher.query;
 
 import com.syncretis.graphql.config.graph.GraphQLFetcher;
 import com.syncretis.graphql.config.graph.GraphQLType;

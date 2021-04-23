@@ -1,9 +1,10 @@
-package com.syncretis.graphql.fetcher;
+package com.syncretis.graphql.fetcher.query;
 
 import com.syncretis.graphql.config.graph.GraphQLFetcher;
 import com.syncretis.graphql.config.graph.GraphQLType;
 import com.syncretis.graphql.dto.CityDTO;
 import com.syncretis.graphql.service.CityService;
+import graphql.kickstart.tools.GraphQLQueryResolver;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.AllArgsConstructor;

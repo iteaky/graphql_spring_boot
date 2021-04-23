@@ -22,7 +22,7 @@ public class MallService {
                 .collect(Collectors.toList());
     }
 
-    @RolesAllowed("ROLE_TEST1")
+    @RolesAllowed("ROLE_TEST")
     public List<MallDTO> getAllByIds(List<Long> ids) {
         return mallRepository.findAllById(ids)
                 .stream()

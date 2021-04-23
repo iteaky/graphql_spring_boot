@@ -12,6 +12,8 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Configuration
 public class AppConfig {
@@ -37,16 +39,10 @@ public class AppConfig {
     @Bean
     public TaskDecorator taskDecorator() {
         return runnable -> {
-            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
             final SecurityContext securityContext = SecurityContextHolder.getContext();
             return () -> {
-                try {
-                    RequestContextHolder.setRequestAttributes(requestAttributes);
                     SecurityContextHolder.setContext(securityContext);
                     runnable.run();
-                } finally {
-                    RequestContextHolder.resetRequestAttributes();
-                }
             };
         };
     }

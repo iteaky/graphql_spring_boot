@@ -1,0 +1,21 @@
+
+
+
+
+{"query":"mutation($file: Upload!){uploadFile(file: $file)"}
+
+FORM-DATA
+
+operations -> {"query":"mutation($file: Upload!, $mall: String){
+  file(input: {
+mallId: 1,
+mall:$mall,
+file: $file
+})
+}",
+  "variables": {"mall":"1"}
+}
+
+map -> {"0": ["variables.file"] }
+
+0 -> 'upload file'

@@ -5,6 +5,7 @@ import graphql.Scalars;
 import graphql.kickstart.execution.GraphQLQueryInvoker;
 import graphql.kickstart.servlet.GraphQLConfiguration;
 import graphql.kickstart.servlet.GraphQLHttpServlet;
+import graphql.kickstart.servlet.apollo.ApolloScalars;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.*;
 import lombok.SneakyThrows;
@@ -14,6 +15,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,6 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "GraphQL", urlPatterns = {"/graphql"}, loadOnStartup = 1)
+@MultipartConfig
 public class GraphQLServlet extends GraphQLHttpServlet {
 
     @Autowired
@@ -51,11 +54,14 @@ public class GraphQLServlet extends GraphQLHttpServlet {
                 .with(contextBuilder)
                 .build();
     }
+
     private GraphQLSchema createSchema() throws FileNotFoundException {
 
-        File file = ResourceUtils.getFile("classpath:schema.graphql");
+        File file = ResourceUtils.getFile("classpath:schema_query.graphql");
+        File upload = ResourceUtils.getFile("classpath:schema_mutation.graphql");
         SchemaParser schemaParser = new SchemaParser();
         TypeDefinitionRegistry typeDefinitionRegistry = schemaParser.parse(file);
+        typeDefinitionRegistry.merge(schemaParser.parse(upload));
 
         RuntimeWiring runtimeWiring = buildRuntimeWiring();
 
@@ -70,8 +76,9 @@ public class GraphQLServlet extends GraphQLHttpServlet {
                 .collect(Collectors.groupingBy(ServiceLocator.FetcherData::getType));
 
         RuntimeWiring.Builder builder = RuntimeWiring.newRuntimeWiring()
-                .scalar(Scalars.GraphQLLong);
-//                .scalar(ApolloScalars.Upload);
+                .scalar(Scalars.GraphQLLong)
+                .scalar(ApolloScalars.Upload)
+                .scalar(ApolloScalars.Upload);
 
         for (Map.Entry<GraphQLType, List<ServiceLocator.FetcherData>> entry : fetchersByType.entrySet()) {
             TypeRuntimeWiring.Builder typeBuilder = TypeRuntimeWiring.newTypeWiring(entry.getKey().name());

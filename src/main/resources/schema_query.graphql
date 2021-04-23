@@ -1,12 +1,12 @@
 scalar Long
 
 type Mall{
-    id: Long
+    id: ID
     name: String
     building: Long
 }
 type Street{
-    id: Long
+    id: ID
     name: String
     area: String
     owner: String
@@ -14,7 +14,7 @@ type Street{
 }
 
 type City{
-    id:Long
+    id:ID
     name:String
     country:String
     streets: [Street]
@@ -22,5 +22,8 @@ type City{
 
 type Query{
     getAllCities: [City]
-    getCity(cityId: Long): City
+    getCity(cityId: Long!): City
 }
+
+
+

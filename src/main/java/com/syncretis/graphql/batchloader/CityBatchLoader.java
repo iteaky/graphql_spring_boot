@@ -22,7 +22,6 @@ public class CityBatchLoader implements BatchLoader<Long, CityDTO> {
 
     @Override
     public CompletionStage<List<CityDTO>> load(List<Long> list) {
-        System.out.println(this.getClass().getSimpleName() + " " + Thread.currentThread().getName());
         List<CityDTO> byIds = cityService.getAllByIds(list).stream()
                 .sorted(Comparator.comparingInt(entity ->
                         list.indexOf(entity.getId())))

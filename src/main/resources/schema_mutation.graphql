@@ -1,0 +1,18 @@
+scalar Upload
+
+input FileWithMall{
+    file: Upload
+    mall: String
+    mallId: Long
+}
+
+input ChangeStreetNameInput {
+    id: Long
+    name: String
+}
+
+type Mutation{
+    changeStreetName(input: ChangeStreetNameInput!):Street
+    fileSize(file: Upload): String
+    file(input: FileWithMall): Long
+}

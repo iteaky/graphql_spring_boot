@@ -5,6 +5,7 @@ import graphql.GraphqlErrorBuilder;
 import graphql.execution.DataFetcherExceptionHandler;
 import graphql.execution.DataFetcherExceptionHandlerParameters;
 import graphql.execution.DataFetcherExceptionHandlerResult;
+import graphql.execution.ResultPath;
 import graphql.language.SourceLocation;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
