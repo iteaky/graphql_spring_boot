@@ -1,5 +1,8 @@
 package com.syncretis.graphql.graph;
 
+import com.syncretis.graphql.dataloader.CityDataLoader;
+import com.syncretis.graphql.dataloader.MallDataLoader;
+import com.syncretis.graphql.dataloader.StreetDataLoader;
 import com.syncretis.graphql.fetcher.GetAllCityFetcher;
 import com.syncretis.graphql.fetcher.GetCityFetcher;
 import com.syncretis.graphql.fetcher.GetMallFetcher;
@@ -27,20 +30,26 @@ public class GraphQlServlet extends GraphQLHttpServlet {
     private GetStreetFetcher getStreetFetcher;
     private GetCityFetcher cityFetcher;
     private GetMallFetcher mallFetcher;
+    private StreetDataLoader streetDataLoader;
+    private CityDataLoader cityDataLoader;
+    private MallDataLoader mallDataLoader;
 
     @Override
     public void init() throws ServletException {
-        getAllCityFetcher = ServiceLocator.getFetcher(GetAllCityFetcher.class);
-        cityFetcher = ServiceLocator.getFetcher(GetCityFetcher.class);
-        getStreetFetcher = ServiceLocator.getFetcher(GetStreetFetcher.class);
-        mallFetcher = ServiceLocator.getFetcher(GetMallFetcher.class);
+        getAllCityFetcher = ServiceLocator.getObject(GetAllCityFetcher.class);
+        cityFetcher = ServiceLocator.getObject(GetCityFetcher.class);
+        getStreetFetcher = ServiceLocator.getObject(GetStreetFetcher.class);
+        mallFetcher = ServiceLocator.getObject(GetMallFetcher.class);
+        streetDataLoader = ServiceLocator.getObject(StreetDataLoader.class);
+        cityDataLoader = ServiceLocator.getObject(CityDataLoader.class);
+        mallDataLoader = ServiceLocator.getObject(MallDataLoader.class);
         super.init();
     }
 
     @SneakyThrows
     @Override
     protected GraphQLConfiguration getConfiguration() {
-        CustomGraphQLContextBuilder customGraphQLContextBuilder = new CustomGraphQLContextBuilder();
+        CustomGraphQLContextBuilder customGraphQLContextBuilder = new CustomGraphQLContextBuilder(streetDataLoader, cityDataLoader, mallDataLoader);
         return GraphQLConfiguration
                 .with(createSchema())
                 .with(customGraphQLContextBuilder)

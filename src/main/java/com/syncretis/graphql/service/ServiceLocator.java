@@ -15,7 +15,7 @@ public class ServiceLocator implements ApplicationContextAware {
         applicationContext = context;
     }
 
-    public static <T> T getFetcher(Class<T> clazz) {
+    public static <T> T getObject(Class<T> clazz) {
         return applicationContext.getBean(clazz);
     }
 }

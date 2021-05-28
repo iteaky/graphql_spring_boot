@@ -7,7 +7,6 @@ import org.dataloader.BatchLoader;
 import org.dataloader.DataLoader;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.concurrent.CompletableFuture;
 
 @Component
@@ -15,12 +14,10 @@ import java.util.concurrent.CompletableFuture;
 public class CityDataLoader {
 
     private final CityService cityService;
-    public static DataLoader<Long, CityDTO> cityDTODataLoader;
 
-    @PostConstruct
-    private void init(){
+    public DataLoader<Long, CityDTO> init(){
         BatchLoader<Long, CityDTO> cityDTOBatchLoader = buildBatchLoader();
-        this.cityDTODataLoader = buildDataLoader(cityDTOBatchLoader);
+        return buildDataLoader(cityDTOBatchLoader);
     }
 
     private DataLoader<Long, CityDTO> buildDataLoader(BatchLoader<Long, CityDTO> cityDTOBatchLoader) {

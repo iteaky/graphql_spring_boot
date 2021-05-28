@@ -7,7 +7,6 @@ import org.dataloader.BatchLoader;
 import org.dataloader.DataLoader;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Comparator;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -18,13 +17,9 @@ public class MallDataLoader {
 
     private final MallService mallService;
 
-    public static DataLoader<Long, MallDTO> mallDTODataLoader;
-
-
-    @PostConstruct
-    private void init() {
+    public DataLoader<Long, MallDTO> init() {
         BatchLoader<Long, MallDTO> mallDTOBatchLoader = buildBatchLoader();
-        this.mallDTODataLoader = buildDataLoader(mallDTOBatchLoader);
+        return buildDataLoader(mallDTOBatchLoader);
     }
 
     private DataLoader<Long, MallDTO> buildDataLoader(BatchLoader<Long, MallDTO> mallDTOBatchLoader) {
@@ -33,9 +28,6 @@ public class MallDataLoader {
 
     private BatchLoader<Long, MallDTO> buildBatchLoader() {
         return list -> CompletableFuture.supplyAsync(() ->
-                mallService.getAllByIds(list)
-                        .stream()
-                        .sorted(Comparator.comparingInt(it -> list.indexOf(it.getId())))
-                        .collect(Collectors.toList()));
+                mallService.getAllByIds(list));
     }
 }

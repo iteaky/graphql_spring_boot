@@ -3,21 +3,26 @@ package com.syncretis.graphql.graph;
 import com.syncretis.graphql.dataloader.CityDataLoader;
 import com.syncretis.graphql.dataloader.MallDataLoader;
 import com.syncretis.graphql.dataloader.StreetDataLoader;
-import com.syncretis.graphql.service.StreetService;
 import graphql.kickstart.execution.context.DefaultGraphQLContext;
 import graphql.kickstart.execution.context.GraphQLContext;
 import graphql.kickstart.servlet.context.DefaultGraphQLServletContext;
 import graphql.kickstart.servlet.context.DefaultGraphQLWebSocketContext;
 import graphql.kickstart.servlet.context.GraphQLServletContextBuilder;
-import org.dataloader.DataLoader;
+import lombok.AllArgsConstructor;
 import org.dataloader.DataLoaderRegistry;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.Session;
 import javax.websocket.server.HandshakeRequest;
 
+@AllArgsConstructor
 public class CustomGraphQLContextBuilder implements GraphQLServletContextBuilder {
+
+    private StreetDataLoader streetDataLoader;
+    private CityDataLoader cityDataLoader;
+    private MallDataLoader mallDataLoader;
 
     public GraphQLContext build() {
         return new DefaultGraphQLContext();
@@ -41,9 +46,9 @@ public class CustomGraphQLContextBuilder implements GraphQLServletContextBuilder
 
     private DataLoaderRegistry buildDataLoaderRegistry() {
         DataLoaderRegistry registry = new DataLoaderRegistry();
-        registry.register("streetDataLoader", StreetDataLoader.streetDTODataLoader);
-        registry.register("cityDataLoader", CityDataLoader.cityDTODataLoader);
-        registry.register("mallDataLoader", MallDataLoader.mallDTODataLoader);
+        registry.register("streetDataLoader", streetDataLoader.init());
+        registry.register("cityDataLoader", cityDataLoader.init());
+        registry.register("mallDataLoader", mallDataLoader.init());
         return registry;
     }
 }

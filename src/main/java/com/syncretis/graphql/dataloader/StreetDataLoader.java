@@ -7,7 +7,6 @@ import org.dataloader.BatchLoader;
 import org.dataloader.DataLoader;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Comparator;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -18,13 +17,9 @@ public class StreetDataLoader {
 
     private final StreetService streetService;
 
-    public static DataLoader<Long, StreetDTO> streetDTODataLoader;
-
-
-    @PostConstruct
-    private void init() {
+    public DataLoader<Long, StreetDTO> init() {
         BatchLoader<Long, StreetDTO> streetDTOBatchLoader = buildBatchLoader();
-        this.streetDTODataLoader = buildDataLoader(streetDTOBatchLoader);
+        return buildDataLoader(streetDTOBatchLoader);
     }
 
     private DataLoader<Long, StreetDTO> buildDataLoader(BatchLoader<Long, StreetDTO> streetDTOBatchLoader) {
@@ -33,9 +28,6 @@ public class StreetDataLoader {
 
     private BatchLoader<Long, StreetDTO> buildBatchLoader() {
         return list -> CompletableFuture.supplyAsync(() ->
-                streetService.findByIds(list)
-                        .stream()
-                        .sorted(Comparator.comparingInt(it -> list.indexOf(it.getId())))
-                        .collect(Collectors.toList()));
+                streetService.findByIds(list));
     }
 }
