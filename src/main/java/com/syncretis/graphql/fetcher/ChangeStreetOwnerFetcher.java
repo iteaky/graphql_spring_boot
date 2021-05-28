@@ -5,6 +5,7 @@ import com.syncretis.graphql.service.StreetService;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.AllArgsConstructor;
+import org.dataloader.DataLoader;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -20,6 +21,10 @@ public class ChangeStreetOwnerFetcher implements DataFetcher<StreetDTO> {
         Map<String, Object> input = dataFetchingEnvironment.getArgument("input");
         Long streetId = (Long) input.get("streetId");
         String owner = (String) input.get("owner");
+
+        DataLoader<Long, StreetDTO> streetDataLoader = dataFetchingEnvironment.getDataLoader("streetDataLoader");
+        streetDataLoader.clear(streetId);
+
         return streetService.changeOwner(streetId, owner);
 
     }
