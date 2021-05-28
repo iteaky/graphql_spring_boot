@@ -1,8 +1,10 @@
 package com.syncretis.graphql.dataloader;
 
+import com.syncretis.graphql.dto.CityDTO;
 import com.syncretis.graphql.dto.MallDTO;
 import com.syncretis.graphql.service.MallService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.dataloader.BatchLoader;
 import org.dataloader.DataLoader;
 import org.springframework.stereotype.Component;
@@ -12,14 +14,18 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MallDataLoader {
 
     private final MallService mallService;
+    private DataLoader<Long, MallDTO> dataLoader;
 
     public DataLoader<Long, MallDTO> init() {
-        BatchLoader<Long, MallDTO> mallDTOBatchLoader = buildBatchLoader();
-        return buildDataLoader(mallDTOBatchLoader);
+        if (dataLoader == null) {
+            BatchLoader<Long, MallDTO> mallDTOBatchLoader = buildBatchLoader();
+            dataLoader = buildDataLoader(mallDTOBatchLoader);
+        }
+        return dataLoader;
     }
 
     private DataLoader<Long, MallDTO> buildDataLoader(BatchLoader<Long, MallDTO> mallDTOBatchLoader) {
