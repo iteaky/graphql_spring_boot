@@ -3,10 +3,7 @@ package com.syncretis.graphql.graph;
 import com.syncretis.graphql.dataloader.CityDataLoader;
 import com.syncretis.graphql.dataloader.MallDataLoader;
 import com.syncretis.graphql.dataloader.StreetDataLoader;
-import com.syncretis.graphql.fetcher.GetAllCityFetcher;
-import com.syncretis.graphql.fetcher.GetCityFetcher;
-import com.syncretis.graphql.fetcher.GetMallFetcher;
-import com.syncretis.graphql.fetcher.GetStreetFetcher;
+import com.syncretis.graphql.fetcher.*;
 import com.syncretis.graphql.service.ServiceLocator;
 import graphql.Scalars;
 import graphql.kickstart.servlet.GraphQLConfiguration;
@@ -33,6 +30,7 @@ public class GraphQlServlet extends GraphQLHttpServlet {
     private StreetDataLoader streetDataLoader;
     private CityDataLoader cityDataLoader;
     private MallDataLoader mallDataLoader;
+    private ChangeStreetOwnerFetcher changeStreetOwnerFetcher;
 
     @Override
     public void init() throws ServletException {
@@ -43,6 +41,7 @@ public class GraphQlServlet extends GraphQLHttpServlet {
         streetDataLoader = ServiceLocator.getObject(StreetDataLoader.class);
         cityDataLoader = ServiceLocator.getObject(CityDataLoader.class);
         mallDataLoader = ServiceLocator.getObject(MallDataLoader.class);
+        changeStreetOwnerFetcher = ServiceLocator.getObject(ChangeStreetOwnerFetcher.class);
         super.init();
     }
 
@@ -67,6 +66,8 @@ public class GraphQlServlet extends GraphQLHttpServlet {
                 .type("Query", builder -> builder
                         .dataFetcher("getAllCities", getAllCityFetcher)
                         .dataFetcher("getCity", cityFetcher))
+                .type("Mutation", builder -> builder
+                        .dataFetcher("changeStreetOwner", changeStreetOwnerFetcher))
                 .type("City", builder -> builder.dataFetcher("streets", getStreetFetcher))
                 .type("Street", builder -> builder.dataFetcher("malls", mallFetcher))
                 .build();

@@ -19,8 +19,19 @@ type City{
     country:String
     streets: [Street]
 }
+input ChangeStreetOwnerInput {
+    streetId: Long
+    owner:String
+}
 
 type Query{
     getAllCities: [City]
     getCity(cityId: Long): City
 }
+
+type Mutation{
+    changeStreetOwner(input:ChangeStreetOwnerInput):Street
+}
+
+
+
