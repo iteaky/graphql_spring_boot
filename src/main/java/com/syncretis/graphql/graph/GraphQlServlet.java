@@ -40,10 +40,8 @@ public class GraphQlServlet extends GraphQLHttpServlet {
     @SneakyThrows
     @Override
     protected GraphQLConfiguration getConfiguration() {
-        CustomGraphQLContextBuilder customGraphQLContextBuilder = new CustomGraphQLContextBuilder();
         return GraphQLConfiguration
                 .with(createSchema())
-                .with(customGraphQLContextBuilder)
                 .build();
     }
 

@@ -4,6 +4,7 @@ import com.syncretis.graphql.dto.CityDTO;
 import com.syncretis.graphql.dto.MallDTO;
 import com.syncretis.graphql.dto.StreetDTO;
 import com.syncretis.graphql.repository.CityRepository;
+import com.syncretis.graphql.service.MallService;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.AllArgsConstructor;
@@ -16,12 +17,13 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 @AllArgsConstructor
-public class GetMallFetcher implements DataFetcher<CompletableFuture<List<MallDTO>>> {
+public class GetMallFetcher implements DataFetcher<List<MallDTO>> {
+
+    private final MallService mallService;
 
     @Override
-    public CompletableFuture<List<MallDTO>> get(DataFetchingEnvironment environment) {
+    public List<MallDTO> get(DataFetchingEnvironment environment) {
         StreetDTO source = environment.getSource();
-        DataLoader<Long, MallDTO> mallDataLoader = environment.getDataLoader("mallDataLoader");
-        return mallDataLoader.loadMany(source.getMallIds());
+        return mallService.getAllByIds(source.getMallIds());
     }
 }

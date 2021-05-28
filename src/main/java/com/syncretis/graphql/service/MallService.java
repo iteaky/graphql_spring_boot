@@ -3,6 +3,7 @@ package com.syncretis.graphql.service;
 import com.syncretis.graphql.dto.MallDTO;
 import com.syncretis.graphql.repository.MallRepository;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class MallService {
                 .collect(Collectors.toList());
     }
 
+    @SneakyThrows
     public List<MallDTO> getAllByIds(List<Long> ids) {
         return mallRepository.findAllById(ids)
                 .stream()

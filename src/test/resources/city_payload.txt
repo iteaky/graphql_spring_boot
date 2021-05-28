@@ -1,0 +1,19 @@
+{"operationName":null,"variables":{},"query":"{
+  getCity(cityId: %d) {
+    id
+    name
+    country
+    streets {
+      id
+      name
+      area
+      owner
+      malls {
+        id
+        name
+        building
+      }
+    }
+  }
+}
+"}

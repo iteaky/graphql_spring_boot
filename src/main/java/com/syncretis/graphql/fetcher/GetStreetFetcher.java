@@ -14,14 +14,13 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 @AllArgsConstructor
-public class GetStreetFetcher implements DataFetcher<CompletableFuture<List<StreetDTO>>> {
-//    private StreetService streetService;
+public class GetStreetFetcher implements DataFetcher<List<StreetDTO>> {
+
+    private final StreetService streetService;
 
     @Override
-    public CompletableFuture<List<StreetDTO>> get(DataFetchingEnvironment environment) {
+    public List<StreetDTO> get(DataFetchingEnvironment environment) {
         CityDTO source = environment.getSource();
-        DataLoader<Long, StreetDTO> streetDataLoader = environment.getDataLoader("streetDataLoader");
-        return streetDataLoader.loadMany(source.getStreetsIds());
-//        return CompletableFuture.completedFuture(streetService.findByIds(source.getStreetsIds()));
+        return streetService.findByIds(source.getStreetsIds());
     }
 }

@@ -29,5 +29,10 @@ public class CityService {
                 .map(CityDTO::fromEntity)
                 .collect(Collectors.toList());
     }
+ public CityDTO getById(Long id) {
+        return cityRepository.findById(id)
+                .map(CityDTO::fromEntity)
+                .orElse(null);
+    }
 
 }
