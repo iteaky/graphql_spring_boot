@@ -28,6 +28,8 @@ public class MallDataLoader {
 
     private BatchLoader<Long, MallDTO> buildBatchLoader() {
         return list -> CompletableFuture.supplyAsync(() ->
-                mallService.getAllByIds(list));
+                mallService.getAllByIds(list).stream()
+                        .sorted(Comparator.comparingInt(it -> list.indexOf(it.getId())))
+                        .collect(Collectors.toList()));
     }
 }

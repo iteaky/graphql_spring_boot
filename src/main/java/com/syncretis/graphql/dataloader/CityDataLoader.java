@@ -7,7 +7,9 @@ import org.dataloader.BatchLoader;
 import org.dataloader.DataLoader;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -15,7 +17,7 @@ public class CityDataLoader {
 
     private final CityService cityService;
 
-    public DataLoader<Long, CityDTO> init(){
+    public DataLoader<Long, CityDTO> init() {
         BatchLoader<Long, CityDTO> cityDTOBatchLoader = buildBatchLoader();
         return buildDataLoader(cityDTOBatchLoader);
     }
@@ -26,6 +28,8 @@ public class CityDataLoader {
 
     private BatchLoader<Long, CityDTO> buildBatchLoader() {
         return list -> CompletableFuture.supplyAsync(() ->
-                cityService.getAllByIds(list));
+                cityService.getAllByIds(list).stream()
+                        .sorted(Comparator.comparingInt(it -> list.indexOf(it.getId())))
+                        .collect(Collectors.toList()));
     }
 }

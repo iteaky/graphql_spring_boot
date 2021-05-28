@@ -28,6 +28,8 @@ public class StreetDataLoader {
 
     private BatchLoader<Long, StreetDTO> buildBatchLoader() {
         return list -> CompletableFuture.supplyAsync(() ->
-                streetService.findByIds(list));
+                streetService.findByIds(list).stream()
+                        .sorted(Comparator.comparingInt(it -> list.indexOf(it.getId())))
+                        .collect(Collectors.toList()));
     }
 }
