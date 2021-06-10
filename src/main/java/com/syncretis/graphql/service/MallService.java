@@ -23,6 +23,9 @@ public class MallService {
 
     @SneakyThrows
     public List<MallDTO> getAllByIds(List<Long> ids) {
+        if (!ids.isEmpty()) {
+            Thread.sleep(4000L);
+        }
         return mallRepository.findAllById(ids)
                 .stream()
                 .map(MallDTO::fromEntity)
