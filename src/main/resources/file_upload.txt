@@ -1,8 +1,9 @@
 
+operations -> {"query":"mutation($file: Upload!){fileSize(file: $file)}"}
 
+map -> {"0": ["variables.file"] }
 
-
-{"query":"mutation($file: Upload!){uploadFile(file: $file)"}
+0 -> 'upload file'
 
 FORM-DATA
 
