@@ -48,10 +48,10 @@ VALUES (1, 'Sheremetevskaya', 'Moskovsky', 1, 's5yx73'),
        (9, 'Admirala Makarova', 'Leningradsky', 3, 's5yx73');
 
 INSERT INTO mall (mall_id, name, building, street_id)
-VALUES (4, 'Lenta', 33, 7),
-       (7, 'KFC', 30, 7),
-       (3, 'Shinomontaj', 27, 7),
-       (5, 'Kia', 25, 7),
-       (2, 'Mashtab', 13, 1),
-       (6, 'Pulkovo 3', 15, 1),
-       (1, 'Toyota', 17, 1);
+VALUES (4, 'Lenta Pulkovskoe', 33, 7),
+       (7, 'KFC Pulkovskoe', 30, 7),
+       (3, 'Shinomontaj Pulkovskoe', 27, 7),
+       (5, 'Kia Pulkovskoe', 25, 7),
+       (2, 'Mashtab Sheremetevskaya', 13, 1),
+       (6, 'Pulkovo 3 Sheremetevskaya', 15, 1),
+       (1, 'Toyota Sheremetevskaya', 17, 1);
