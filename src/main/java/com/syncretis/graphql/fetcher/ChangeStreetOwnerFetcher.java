@@ -21,11 +21,30 @@ public class ChangeStreetOwnerFetcher implements DataFetcher<StreetDTO> {
         Map<String, Object> input = dataFetchingEnvironment.getArgument("input");
         Long streetId = (Long) input.get("streetId");
         String owner = (String) input.get("owner");
-
-        DataLoader<Long, StreetDTO> streetDataLoader = dataFetchingEnvironment.getDataLoader("streetDataLoader");
-        streetDataLoader.clear(streetId);
-
         return streetService.changeOwner(streetId, owner);
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+        DataLoader<Long, StreetDTO> streetDataLoader = dataFetchingEnvironment.getDataLoader("streetDataLoader");
+        streetDataLoader.clear(streetId);
+ */
