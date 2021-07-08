@@ -29,7 +29,7 @@ class GetCityFetcherTest {
 
     @Test
     void get() throws IOException, URISyntaxException {
-        String resourceAsString = this.getResourceAsString("city_paylad.txt");
+        String resourceAsString = this.getResourceAsString("city_payload.txt");
 
         List<CityTestDTO> expected = getRealData();
 
